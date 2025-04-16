@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './App.css';
 import ButtonSet from './buttonSet.jsx';
-import CardSetMain from './CardSetMain.jsx';
+import {CardSetMain} from './cardSetMain.jsx';
 import allProducts from './fake-data/all-products.js';
 
 function App() {

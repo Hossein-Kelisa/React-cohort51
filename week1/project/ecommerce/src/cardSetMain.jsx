@@ -1,7 +1,7 @@
 import React from 'react';
 import Card from './card.jsx';
 
-const CardSetMain = ({ filterCards }) => {
+export const CardSetMain = ({ filterCards }) => {
     return (
         <div className="card-set">
             {filterCards.map((card, index) => (
@@ -14,5 +14,3 @@ const CardSetMain = ({ filterCards }) => {
         </div>
     )
 };
-
-export default CardSetMain;
