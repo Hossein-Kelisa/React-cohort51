@@ -48,7 +48,7 @@
     width: 20%;
     height: 120%;
     color: #070fea;
-    background-color: #88ea07;
+    background-color: #af4c54;
     transition: all 0.3s ease;
   }
   
@@ -115,3 +115,7 @@
       margin: 20px auto;
     }
   }
+  .button-set button.active {
+    background-color: #af4c54;
+    color: white;
+}

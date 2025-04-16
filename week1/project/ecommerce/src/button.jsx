@@ -1,9 +1,11 @@
-
-const Button = ({ buttonName, setFilterCards }) => {
-    
+const Button = ({ buttonName, setFilterCards, isActive }) => {
     return (
-        <button onClick={() => setFilterCards(buttonName)}>{buttonName}</button>
+      <button
+        onClick={() => setFilterCards(buttonName)}
+        className={isActive ? 'active' : ''}
+      >
+        {buttonName}
+      </button>
     );
-};
-
-export default Button;
+  };
+  export default Button;
