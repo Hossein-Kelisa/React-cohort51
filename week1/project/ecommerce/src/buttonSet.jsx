@@ -1,5 +1,5 @@
 import React from 'react';
-import Button from './Button.jsx';
+import Button from './button.jsx';
 import allCategories from './fake-data/all-categories.js';
 
 const ButtonSet = ({ setFilterCards, activeCategory }) => {
