@@ -1,35 +1,40 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useState,useEffect } from 'react'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [person, setPerson] = useState(null)
+
+  //function to fetch data from the API
+  const getPerson = async () => {
+    const res = await fetch('https://randomuser.me/api/')
+    const data = await res.json()
+    const user = data.results[0]
+    setPerson(user);
+  };
+ 
+  // useEffect to call getPerson ONCE
+  useEffect(() => {
+    getPerson();
+  }, []);
+
+  // optional: console.log to see the data
+  console.log(person);
+
+  // If person is not loaded yet, show nothing
+  if (!person) {
+    return <p>Loading...</p>;
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div>
+      <h1>Random Person</h1>
+      <ul>
+        <li>First Name: {person.name.first}</li>
+        <li>Last Name: {person.name.last}</li>
+        <li>Email: {person.email}</li>
+      </ul>
+    </div>
+  );
 }
 
-export default App
+export default App;
