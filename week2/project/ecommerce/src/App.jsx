@@ -1,26 +1,78 @@
-import { useState } from 'react';
-import './App.css';
-import ButtonSet from './buttonSet.jsx';
-import {CardSetMain} from './cardSetMain.jsx';
-import allProducts from './fake-data/all-products.js';
+import { useState, useEffect } from 'react'
+import './App.css'
+import ButtonSet from './components/buttonSet.jsx'
+import CardSetMain from './components/cardSetMain.jsx'
+import { Routes, Route } from 'react-router-dom'
+import ProductDetail from './pages/productDetail.jsx'
+import axios from 'axios'
 
 function App() {
-  const [filterCards, setFilterCards] = useState(allProducts);
-  const [activeCategory, setActiveCategory] = useState(null);
+  const [products, setProducts] = useState([])
+  const [categories, setCategories] = useState([])
+  const [activeCategory, setActiveCategory] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
 
-  const handleFilterCards = (category) => {
-    setActiveCategory(category);  // Set the active category
-    const filtered = allProducts.filter(card => card.category === category);  // Filter products based on category
-    setFilterCards(filtered);  // Update the displayed products with the filtered ones
-  };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true)
+        const [productsRes, categoriesRes] = await Promise.all([
+          axios.get('https://fakestoreapi.com/products'),
+          axios.get('https://fakestoreapi.com/products/categories')
+        ])
+        setProducts(productsRes.data)
+        setCategories(categoriesRes.data)
+      } catch{
+        setError('Failed to load products. Please try again later.')
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchData()
+  }, [])
+
+  const handleFilter = async (category) => {
+    try {
+      setLoading(true)
+      setActiveCategory(category)
+      const url = category 
+        ? `https://fakestoreapi.com/products/category/${category}`
+        : 'https://fakestoreapi.com/products'
+      const response = await axios.get(url)
+      setProducts(response.data)
+    } catch {
+      setError('Failed to filter products. Please try again.')
+    } finally {
+      setLoading(false)
+    }
+  }
 
   return (
-    <main>
-      <h1>Products</h1>
-      <ButtonSet setFilterCards={handleFilterCards} activeCategory={activeCategory} />
-      <CardSetMain filterCards={filterCards} />
-    </main>
-  );
+    <div className="app">
+      <Routes>
+        <Route path="/" element={
+          <>
+            <h1>Our Products</h1>
+            {error && <div className="error-message">{error}</div>}
+            {loading ? (
+              <div className="loading-spinner">Loading...</div>
+            ) : (
+              <>
+                <ButtonSet 
+                  categories={categories}
+                  onFilter={handleFilter}
+                  activeCategory={activeCategory}
+                />
+                <CardSetMain products={products} />
+              </>
+            )}
+          </>
+        } />
+        <Route path="/product/:id" element={<ProductDetail />} />
+      </Routes>
+    </div>
+  )
 }
 
-export default App;
+export default App
