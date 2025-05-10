@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import heartIconRegular from '../assets/heart-regular.svg';
 import heartIconSolid from '../assets/heart-solid.svg';
-import {useFavorites} from '../hooks/useFavorites.jsx';
+import {useFavorites} from '../hooks/UseFavorites.jsx';
 
 
 const ProductCard = ({ id, image, title }) => {

@@ -3,7 +3,7 @@ import '../App.css';
 import CategoryList from './CategoryList.jsx';
 import ProductList from './ProductList.jsx';
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
-import ProductDetail from '../pages/productDetail.jsx';
+import ProductDetail from '../pages/productDetail.jsx';  //This is wierd!!! ProductDetail is correct but is shows error
 import FavoritePage from '../pages/FavoritePage.jsx';
 import Header from './Header.jsx';
 import useFetch from '../hooks/UseFetch.jsx';

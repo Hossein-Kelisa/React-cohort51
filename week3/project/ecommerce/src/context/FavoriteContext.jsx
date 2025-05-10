@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import { FavoriteContext } from "./FavoriteContextInstance";
+import React, { createContext, useState } from "react";
+
+export const FavoriteContext = createContext();
 
 export const FavoriteProvider = ({ children }) => {
   const [favorites, setFavorites] = useState([]);
